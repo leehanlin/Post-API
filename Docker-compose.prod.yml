@@ -2,7 +2,7 @@ version: '3.2'
 services:
   website:
     container_name: 'website'
-    image: '${{ env.WEBSITE_IMAGE }}' 
+    image: '${WEBSITE_IMAGE}'  #'${{ env.WEBSITE_IMAGE }}' 
     ports:
       - "3000:3000"
     volumes:
