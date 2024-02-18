@@ -34,7 +34,7 @@ jobs:
           docker pull ${{ env.NGINX_IMAGE }} || true
       - name: Build images
         run: |
-          docker-compose -f docker-compose.ci.yml build
+          docker-compose -f Docker-compose.ci.yml build
       - name: Push images
         run: |
           docker push ${{ env.WEBSITE_IMAGE }}
@@ -83,13 +83,12 @@ jobs:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
         run: |
-          scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml ${{secrets.AWS_HOST_USER}}@${{ secrets.AWS_EC2_IP_ADDRESS }}:
+          scp -o StrictHostKeyChecking=no -r ./.env ./Docker-compose.prod.yml ${{secrets.AWS_HOST_USER}}@${{ secrets.AWS_EC2_IP_ADDRESS }}:
           ssh -o StrictHostKeyChecking=no ${{secrets.AWS_HOST_USER}}@${{ secrets.AWS_EC2_IP_ADDRESS }} << EOF
               docker-compose down --rmi all -v 
               docker login ghcr.io -u ${{secrets.NAMESPACE}} -p ${{secrets.PERSONAL_ACCESS_TOKEN}}
               docker pull $WEBSITE_IMAGE
               docker pull $NGINX_IMAGE 
-              docker-compose --env-file=.env -f docker-compose.prod.yml up -d
+              docker-compose --env-file=.env -f Docker-compose.prod.yml up -d
               docker logout
           EOF
-          
