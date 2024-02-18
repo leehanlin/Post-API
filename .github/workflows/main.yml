@@ -19,6 +19,11 @@ jobs:
       - name: checkout main
         uses: actions/checkout@v3
 
+      - name: Set WEBSITE_IMAGE and NGINX_IMAGE
+        run: |
+          echo "WEBSITE_IMAGE=ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/my-app" >> $GITHUB_ENV
+          echo "NGINX_IMAGE=ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx" >> $GITHUB_ENV
+
       - name: Set environment variables to .env
         run: |
           echo "WEBSITE_IMAGE=$(echo ${{env.WEBSITE_IMAGE}} )" >> $GITHUB_ENV
