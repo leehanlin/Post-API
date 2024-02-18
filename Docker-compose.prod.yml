@@ -1,12 +1,12 @@
 version: '3.2'
 services:
-  my-app:
-    container_name: 'my-app'
+  website:
+    container_name: 'website'
     image: '${{ env.WEBSITE_IMAGE }}' 
     ports:
       - "3000:3000"
     volumes:
-      - my-app:./my-app/build/  # build files will be added at this directory
+      - website:./website/build/  # build files will be added at this directory
   
   nginx:
     container_name: 'nginx'
@@ -14,7 +14,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - my-app:/usr/share/nginx/html/my-app # Copy React App's build files to the Nginx directory
+      - website:/usr/share/nginx/html/website # Copy React App's build files to the Nginx directory
 
 volumes:
-  my-app:
+  website:

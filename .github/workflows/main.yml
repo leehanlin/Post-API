@@ -51,10 +51,10 @@ jobs:
           WEBSITE_IMAGE: ${{ env.WEBSITE_IMAGE }}
           NGINX_IMAGE: ${{ env.NGINX_IMAGE }}
       
-      - name: Tag the Docker image
-        run: |
-          docker tag my-app:latest ${{ env.WEBSITE_IMAGE }}:latest
-          docker tag nginx:latest ${{ env.NGINX_IMAGE }}:latest
+      #- name: Tag the Docker image
+      #  run: |
+      #    docker tag my-app:latest ${{ env.WEBSITE_IMAGE }}:latest
+      #    docker tag nginx:latest ${{ env.NGINX_IMAGE }}:latest
       
       - name: Push images
         run: |
