@@ -1,0 +1,25 @@
+version: '3'
+services:
+  my-app:
+    build:
+      context: ./my-app
+      dockerfile: Dockerfile
+    cache_from:
+        - '${my-app_IMAGE}'
+    image: '${my-app_IMAGE}'
+    ports:
+      - "3000:3000"
+    volumes:
+      - my-app:./my-app/build/  # build files will be added at this directory
+
+  nginx:
+    build:
+     context: ./nginx
+     dockerfile: Dockerfile
+    cache_from:
+        - '${NGINX_IMAGE}'
+    image: '${NGINX_IMAGE}'
+    ports:
+      - "80:80"
+    volumes:
+      - my-app:/usr/share/nginx/html/my-app # Copy React App's build files to the Nginx directory
