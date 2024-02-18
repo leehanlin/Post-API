@@ -6,7 +6,7 @@ on:
 
 env:
   #
-  WEBSITE_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/my-app
+  WEBSITE_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/website
   NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx
   REGISTRY: ghcr.io
 
@@ -21,7 +21,7 @@ jobs:
 
       - name: Set WEBSITE_IMAGE and NGINX_IMAGE
         run: |
-          echo "WEBSITE_IMAGE=ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.event.repository.name }} | tr '[:upper:]' '[:lower:]')/my-app" >> $GITHUB_ENV
+          echo "WEBSITE_IMAGE=ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.event.repository.name }} | tr '[:upper:]' '[:lower:]')/website" >> $GITHUB_ENV
           echo "NGINX_IMAGE=ghcr.io/${{ github.repository_owner }}/$(echo ${{ github.event.repository.name }} | tr '[:upper:]' '[:lower:]')/nginx" >> $GITHUB_ENV
 
       - name: Convert image names to lowercase
