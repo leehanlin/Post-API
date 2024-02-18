@@ -21,8 +21,8 @@ jobs:
 
       - name: Set WEBSITE_IMAGE and NGINX_IMAGE
         run: |
-          echo "WEBSITE_IMAGE=ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/my-app" >> $GITHUB_ENV
-          echo "NGINX_IMAGE=ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx" >> $GITHUB_ENV
+          echo "WEBSITE_IMAGE=ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name | lower }}/my-app" >> $GITHUB_ENV
+          echo "NGINX_IMAGE=ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name | lower }}/nginx" >> $GITHUB_ENV
 
       - name: Set environment variables to .env
         run: |
@@ -37,9 +37,16 @@ jobs:
         run: |
           docker pull ${{ env.WEBSITE_IMAGE }} || true
           docker pull ${{ env.NGINX_IMAGE }} || true
+      
       - name: Build images
         run: |
           docker-compose -f Docker-compose.ci.yml build
+      
+      - name: Tag the Docker image
+        run: |
+          docker tag my-app:latest ${{ env.WEBSITE_IMAGE }}:latest
+          docker tag nginx:latest ${{ env.NGINX_IMAGE }}:latest
+      
       - name: Push images
         run: |
           docker push ${{ env.WEBSITE_IMAGE }}
