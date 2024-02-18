@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     #cache_from:
     #    - '${my-app_IMAGE}'
-    image: '${{ env.WEBSITE_IMAGE }}' 
+    image: '${WEBSITE_IMAGE}'
     ports:
       - "3000:3000"
     volumes:
