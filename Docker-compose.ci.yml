@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     #cache_from:
     #    - '${my-app_IMAGE}'
-    image: '${WEBSITE_IMAGE}'
+    image: '${my-app}'
     ports:
       - "3000:3000"
     volumes:
@@ -18,7 +18,7 @@ services:
      dockerfile: Dockerfile
     #cache_from:
     #    - '${NGINX_IMAGE}'
-    image: '${NGINX_IMAGE}'
+    image: '${nginx}'
     ports:
       - "80:80"
     volumes:
