@@ -22,13 +22,16 @@ describe('createPost', () => {
     });
 
     test('should return 400 if required fields are missing', async () => {
-        const req = { body: {} };
-        const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
-
-        await createPost(req, res);
-
-        expect(res.status).toHaveBeenCalledWith(400);
-        expect(res.json).toHaveBeenCalledWith({ message: 'All fields are required.' });
+        const req = {
+            userId: '',
+            header: '',
+            description: '',
+            visibility: 'University',
+            interestid: 1,
+        };
+        const res = await request(app).post('/api/posts').send(req);
+        expect(res.status).toBe(400);
+        expect(res.body.message).toBe('All fields are required.')
     });
 
     test('should return 500 if database query fails', async () => {
@@ -48,12 +51,12 @@ describe('createPost', () => {
 
     test('should return 201 if post is created successfully', async () => {
         const req = {
-                userId: 'test',
-                header: 'Header',
-                description: 'Description',
-                visibility: 'University',
-                interestid: 1,
-            };
+            userId: 'test',
+            header: 'Header',
+            description: 'Description',
+            visibility: 'University',
+            interestid: 1,
+        };
         const res = await request(app).post('/api/posts').send(req);
         expect(res.status).toBe(201);
         expect(res.body.message).toBe('Post created successfully.')
